@@ -20,14 +20,14 @@ Time-Tracker-Google-Calendar analyzes time usage by processing events from Googl
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/calendarmetrics.git
+git clone https://github.com/gabrielesanticchi/Time-Tracker-Google-Calendar.git
 cd calendarmetrics
 ```
 
 2. Create a virtual environment (recommended):
 ```bash
-python -m venv venv
-source venv/bin activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+source .venv/bin activate  # On Windows: .venv\Scripts\activate
 ```
 
 3. Install dependencies:
