@@ -1,5 +1,5 @@
 # Time-Tracker-Google-Calendar
-Time-Tracker-Google-Calendar analyzes time usage by processing events from Google Calendar .ics files. It provides insights into activities time percentages and weekly distributions. Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
+Analyze time usage by processing events from Calendar .ics files. It provides insights into activities time percentages and weekly distributions. Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
 
 ## Output Examples
 
