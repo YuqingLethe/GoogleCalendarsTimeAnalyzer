@@ -1,0 +1,24 @@
+replacements:
+  # Common typos
+  "meting": "meeting"
+  "develoment": "development"
+  "developement": "development"
+  "programing": "programming"
+  "planing": "planning"
+  "documention": "documentation"
+  
+  # Abbreviations
+  "mtg": "meeting"
+  "dev": "development"
+  "doc": "documentation"
+  "prog": "programming"
+  
+  # Alternative spellings
+  "synch": "sync"
+  "conf call": "meeting"
+  "video call": "meeting"
+  
+  # Project-specific replacements
+  "proj x": "project x"
+  "client a": "client alpha"
+  "costumer": "customer"

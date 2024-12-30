@@ -1,0 +1,14 @@
+# Default period settings for fiscal quarters and years
+default_periods:
+  quarter:
+    start_month: 1  # January
+    duration_months: 3
+  year:
+    start_month: 1  # January
+    end_month: 12   # December
+
+# Active time range for analysis
+# Format: YYYY-MM-DD
+active_range:
+  start_date: "2024-01-01"
+  end_date: "2024-12-31"

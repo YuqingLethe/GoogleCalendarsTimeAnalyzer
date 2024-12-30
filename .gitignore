@@ -1,0 +1,9 @@
+input/
+output/
+config/holidays.yaml
+config/events_grouping.yaml
+config/events_grouping_sample.yaml
+config/text_replacements.yaml
+config/time_periods.yaml
+.venv/
+*.pyc
