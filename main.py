@@ -52,6 +52,10 @@ def main():
     fig_weekly = viz.plot_weekly_hours(weekly_hours)
     fig_weekly.write_html(os.path.join('output', 'weekly_hours.html'))
     
+    # Daily hours plot
+    fig_daily = viz.plot_daily_hours(processor.df)
+    fig_daily.write_html(os.path.join('output', 'daily_hours.html'))
+    
     # Calendar quarter percentages
     for quarter in periods['calendar_quarters']:
         quarter_data = processor.get_calendar_quarter_percentages(quarter)

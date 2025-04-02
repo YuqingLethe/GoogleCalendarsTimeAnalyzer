@@ -26,16 +26,15 @@ but most codes are changed to accommodate with multiple calendars and remove the
 1. Clone the repository:
 ```bash
 git clone https://github.com/YuqingLethe/GoogleCalendarsTimeAnalyzer.git
-cd calendarmetrics
 ```
 
-2. Create a virtual environment (recommended):
+2. Create a virtual environment (recommended) and activate it:
 ```bash
 python -m venv .venv
-source .venv/bin activate  # On Windows: .venv\Scripts\activate
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3. Install dependencies inside the virtual environment (should see `(venv)` in the terminal):
 ```bash
 pip install -r requirements.txt
 ```

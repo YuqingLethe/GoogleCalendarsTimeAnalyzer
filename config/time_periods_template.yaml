@@ -10,5 +10,11 @@ default_periods:
 # Active time range for analysis
 # Format: YYYY-MM-DD
 active_range:
-  start_date: "2024-01-01"
-  end_date: "2024-12-31"
+  start_date: "2025-01-01"
+  end_date: "2025-12-31"
+
+# Daily view range (for daily hours visualization)
+# Format: YYYY-MM-DD
+daily_view_range:
+  start_date: "2025-01-01"
+  end_date: "2025-01-31"  # Default to show one month

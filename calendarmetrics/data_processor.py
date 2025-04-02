@@ -20,6 +20,7 @@ class DataProcessor:
         df = pd.DataFrame(self.events)
         
         # Basic time columns
+        df['date'] = df['start'].dt.date  # Add date column for daily view
         df['week'] = df['start'].dt.isocalendar().week
         df['year'] = df['start'].dt.year
         df['month'] = df['start'].dt.month
