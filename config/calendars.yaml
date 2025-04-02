@@ -1,0 +1,18 @@
+calendars:
+  work:
+    file: "2Work.ics"
+    category: "WORK"
+    color: "#4287f5"
+    description: "Work-related activities"
+    
+  sleep:
+    file: "3Sleep.ics"
+    category: "SLEEP"
+    color: "#f54242"
+    description: "Sleep activities"
+    
+  errands:
+    file: "4Errands.ics"
+    category: "ERRANDS"
+    color: "#42f554"
+    description: "Errand activities" 
