@@ -1,5 +1,10 @@
 # Time-Tracker-Google-Calendar
-Analyze time usage by processing events from various .ics files. It provides insights into activities time percentages and weekly distributions. Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
+Analyze time usage by processing events from various .ics files.
+It provides insights into activities time percentages and weekly distributions.
+Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
+
+This is originally forked from https://github.com/gabrielesanticchi/Time-Tracker-Google-Calendar.git,
+but most codes are changed to accommodate with multiple calendars and remove the color-based clustering.
 
 ## Output Examples
 
@@ -20,7 +25,7 @@ Analyze time usage by processing events from various .ics files. It provides ins
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/gabrielesanticchi/Time-Tracker-Google-Calendar.git
+git clone https://github.com/YuqingLethe/GoogleCalendarsTimeAnalyzer.git
 cd calendarmetrics
 ```
 
@@ -42,7 +47,7 @@ pip install -r requirements.txt
    - Navigate to "Import & Export"
    - Click "Export" to download your calendar as ICS
 
-2. Place the ICS file in the `input` directory as `calendar.ics`
+2. Place the ICS files in the `input/calendars` directory as `xx.ics`
 
 3. Configure your settings (see Configuration section)
 
