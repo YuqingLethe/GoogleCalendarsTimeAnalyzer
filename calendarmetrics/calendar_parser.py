@@ -44,13 +44,19 @@ class CalendarParser:
         # Convert to UTC then remove timezone info
         return dt.astimezone(pytz.UTC).replace(tzinfo=None)
         
-    def parse_ics(self, ics_path: str) -> List[Dict]:
-        """Parse ICS file and extract relevant event information."""
+    def parse_ics(self, ics_path: str, calendar_category: str) -> List[Dict]:
+        """Parse ICS file and extract relevant event information.
+        
+        Args:
+            ics_path: Path to the ICS file
+            calendar_category: Category of the calendar (e.g., "WORK", "PERSONAL")
+            
+        Returns:
+            List of event dictionaries
+        """
         events = []
         start_date, end_date = self.time_range
-        excluded_events = self.config.get_excluded_events()
 
-        
         with open(ics_path, 'rb') as f:
             cal = icalendar.Calendar.from_ical(f.read())
             
@@ -75,10 +81,6 @@ class CalendarParser:
                 
                 summary = str(event.get('summary', ''))
                 
-                # Skip excluded events
-                if any(exclude.upper() in summary.upper() for exclude in excluded_events):
-                    continue
-
                 # Skip if event occurs on holiday/vacation
                 if self._is_holiday_or_vacation(event_start.date()):
                     continue
@@ -86,18 +88,16 @@ class CalendarParser:
                 # Apply text replacements
                 summary = self._apply_replacements(summary)
                 
-                # Extract macro and micro activitiess
-                macro_activities, micro_activities = self._parse_summary(summary)
-                
                 # Calculate duration in hours
                 duration = self._calculate_duration(event_start, event_end)
                 
                 events.append({
                     'start': event_start,
                     'end': event_end,
-                    'macro_activities': macro_activities,
-                    'micro_activities': micro_activities,
-                    'duration': duration
+                    'macro_activities': calendar_category,
+                    'micro_activities': summary,
+                    'duration': duration,
+                    'calendar': calendar_category
                 })
                     
         return events
@@ -107,33 +107,6 @@ class CalendarParser:
         for old, new in self.config.get_text_replacements().items():
             text = text.replace(old, new)
         return text
-    
-    def _parse_summary(self, summary: str) -> tuple:
-        """Extract and map macro and micro activitiess from event summary.
-        
-        This function performs a two-step mapping process:
-        1. First attempts to map the macro activities using the macro variants from YAML
-        2. If the macro activities is mapped to 'OTHER', attempts to remap based on micro keywords from YAML
-        
-        Args:
-            summary: Event summary string in format "MACRO|micro description"
-            
-        Returns:
-            tuple: (mapped_macro_activities, micro_activities)
-        """
-        # Split into macro and micro components
-        parts = summary.split('|', 1)
-        macro_activities = parts[0].strip()
-        micro_activities = parts[1].strip() if len(parts) > 1 else f"{macro_activities}" 
-        
-        # First mapping attempt using macro variants
-        mapped_macro = self.config.get_macro_activities_mapping(macro_activities)
-        
-        # If mapped to OTHER and we have a micro activities, try to remap based on micro keywords
-        if mapped_macro == 'OTHER':
-            mapped_macro = self.config.get_macro_from_micro(micro_activities)
-        
-        return mapped_macro, micro_activities
     
     def _calculate_duration(self, start: datetime, end: datetime) -> float:
         """Calculate event duration in hours."""

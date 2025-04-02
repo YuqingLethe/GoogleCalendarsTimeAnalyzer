@@ -10,14 +10,34 @@ def main():
     config = ConfigLoader('config')
     parser = CalendarParser(config)
     
-    # Parse calendar file
+    # Parse all calendar files
     print("Parsing calendar data...")
-    events = parser.parse_ics(os.path.join('input', 'calendar.ics'))
+    all_events = []
+    calendars_dir = os.path.join('input', 'calendars')
+    
+    for calendar_name, calendar_config in config.calendars.get('calendars', {}).items():
+        ics_path = os.path.join(calendars_dir, calendar_config['file'])
+        print(f"\nProcessing {calendar_name} calendar from {ics_path}...")
+        try:
+            events = parser.parse_ics(ics_path, calendar_config['category'])
+            print(f"Found {len(events)} events in {calendar_name} calendar")
+            all_events.extend(events)
+        except Exception as e:
+            print(f"Error processing {calendar_name} calendar: {str(e)}")
+    
+    print(f"\nTotal events found across all calendars: {len(all_events)}")
     
     # Process data
-    print("Processing events...") 
-    processor = DataProcessor(events, config)
-    processor.df.to_excel(os.path.join('output', 'processed_events.xlsx'), index=False)
+    print("\nProcessing events...") 
+    processor = DataProcessor(all_events, config)
+    
+    # Save raw data
+    output_excel = os.path.join('output', 'processed_events.xlsx')
+    processor.df.to_excel(output_excel, index=False)
+    print(f"Saved raw data to {output_excel}")
+    print(f"Data shape: {processor.df.shape}")
+    print("\nUnique macro activities found:", processor.df['macro_activities'].unique())
+    
     # Get weekly hours
     weekly_hours = processor.get_weekly_hours()
     
@@ -25,7 +45,7 @@ def main():
     periods = processor.get_unique_periods()
     
     # Create visualizations
-    print("Creating visualizations...")
+    print("\nCreating visualizations...")
     viz = Visualizer(config)
     
     # Weekly hours plot
@@ -44,7 +64,7 @@ def main():
         fig_year = viz.plot_activities_percentages(year_data, f"Activities Distribution - FY{year-1}-{year}")
         fig_year.write_html(os.path.join('output', f'percentages_FY_{year-1}_{year}.html'))
     
-    print("Analysis complete! Results saved in the 'output' directory.")
+    print("\nAnalysis complete! Results saved in the 'output' directory.")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -22,10 +22,10 @@ class ConfigLoader:
     def _load_configs(self) -> None:
         """Load all configuration files."""
         config_files = {
-            'events_grouping': 'events_grouping.yaml',
             'replacements': 'text_replacements.yaml',
             'holidays': 'holidays.yaml',
-            'time_periods': 'time_periods.yaml'
+            'time_periods': 'time_periods.yaml',
+            'calendars': 'calendars.yaml'
         }
         
         for attr, filename in config_files.items():
@@ -70,50 +70,6 @@ class ConfigLoader:
     def get_text_replacements(self) -> Dict[str, str]:
         """Get text replacement mappings."""
         return self.replacements.get('replacements', {})
-        
-    def get_macro_activities_mapping(self, activities: str) -> str:
-        """Map activities to standardized macro activities category based on macro variants and micro keywords.
-        
-        Args:
-            activities: activities string to map
-            
-        Returns:
-            str: Mapped macro activities category
-        """
-        mappings = self.events_grouping.get('macro_activities_mapping', {})
-        
-        # First try to match based on macro variants
-        activities_upper = activities.upper()
-        for macro, mapping_info in mappings.items():
-            if activities_upper in [variant.upper() for variant in mapping_info['macro_variants']]:
-                return macro
-                
-        return 'OTHER'
-
-    def get_excluded_events(self) -> List[str]:
-        """Get list of event strings that should be excluded."""
-        return self.events_grouping.get('excluded_events', [])
-
-    def get_macro_from_micro(self, micro_activities: str) -> str:
-        """Map activities to macro category based on micro activities keywords.
-        
-        Args:
-            micro_activities: Micro activities description to analyze
-            
-        Returns:
-            str: Mapped macro activities category or 'OTHER' if no match
-        """
-
-        micro_lower = micro_activities.lower()
-        mappings = self.events_grouping.get('macro_activities_mapping', {})
-        
-        # Check each macro category's micro keywords
-        for macro, mapping_info in mappings.items():
-            micro_keywords = mapping_info.get('micro_keywords', [])
-            if any(keyword.lower() in micro_lower for keyword in micro_keywords):
-                return macro
-                
-        return 'OTHER'
     
     def is_holiday_or_vacation(self, date_to_check: date) -> bool:
         """Check if date is a holiday or vacation day.

@@ -7,7 +7,11 @@ import pandas as pd
 class Visualizer:
     def __init__(self, config_loader):
         self.config = config_loader
-        self.colors = self.config.events_grouping.get('macro_colors', {})
+        # Get colors from calendars configuration
+        self.colors = {
+            calendar['category']: calendar['color']
+            for calendar in self.config.calendars.get('calendars', {}).values()
+        }
         
         self.layout_settings = dict(
             font=dict(family="Montserrat, sans-serif", color='white'),

@@ -1,5 +1,5 @@
 # Time-Tracker-Google-Calendar
-Analyze time usage by processing events from Calendar .ics files. It provides insights into activities time percentages and weekly distributions. Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
+Analyze time usage by processing events from various .ics files. It provides insights into activities time percentages and weekly distributions. Configurable files enable mapping, replacements, and customizations to generate metrics over user-defined periods.
 
 ## Output Examples
 
@@ -55,44 +55,29 @@ python main.py
 
 CalendarMetrics uses YAML configuration files located in the `config/` directory:
 
-### 1. Events Grouping (`events_grouping.yaml`)
+### 1. Calendars (`calendars.yaml`)
 
-This file defines:
-- Macro activities mappings with both macro variants and micro keywords
-- Events to exclude from analysis
-- Color schemes for visualizations
+This file defines your calendar categories and their properties:
 
-Example structure:
 ```yaml
-macro_activities_mapping:
-  DEVELOPMENT:
-    macro_variants:
-      - "DEV"
-      - "DEVELOPMENT"
-      - "CODING"
-    micro_keywords:
-      - "bug fix"
-      - "feature"
-      - "implementation"
-
-  MEETINGS:
-    macro_variants:
-      - "MEET"
-      - "MEETING"
-      - "SYNC"
-    micro_keywords:
-      - "standup"
-      - "planning"
-      - "retrospective"
-
-excluded_events:
-  - "OOF"
-  - "OUT OF OFFICE"
-  - "VACATION"
-
-macro_colors:
-  DEVELOPMENT: '#4287f5'
-  MEETINGS: '#f54242'
+calendars:
+  work:
+    file: "2Work.ics"
+    category: "WORK"
+    color: "#4287f5"
+    description: "Work-related activities"
+    
+  sleep:
+    file: "3Sleep.ics"
+    category: "SLEEP"
+    color: "#f54242"
+    description: "Sleep activities"
+    
+  errands:
+    file: "4Errands.ics"
+    category: "ERRANDS"
+    color: "#42f554"
+    description: "Errand activities"
 ```
 
 ### 2. Text Replacements (`text_replacements.yaml`)
@@ -143,45 +128,13 @@ active_range:
 
 ## Calendar Event Format
 
-Format your calendar events as follows:
-```
-MACRO_ACTIVITY | micro_activity_description
-```
+With the multi-calendar approach, each calendar file should contain events for a specific category. The event summaries can be in any format since the categorization is now handled by the calendar file itself.
 
-Examples:
-- `DEVELOPMENT | Implementing authentication module`
-- `MEETING | Sprint planning with team`
-- `SUPPORT | Customer onboarding call`
-
-The part before the `|` will be mapped to your macro activities using the rules in `events_grouping.yaml`, and the part after provides additional detail that can also influence the mapping through micro keywords.
+Example event summaries:
+- Work calendar: "Team meeting", "Project planning", "Code review"
+- Sleep calendar: "Sleep", "Nap", "Rest"
+- Errands calendar: "Grocery shopping", "Doctor appointment", "Car maintenance"
 
 ## Output
 
-The tool generates several visualizations in the `output` directory:
-
-1. **Weekly Hours Chart**: 
-   - Stacked bar chart showing hours per macro activity per week
-   - Interactive HTML visualization
-   - Saved as `weekly_hours.html`
-
-2. **Calendar Quarter Distribution**:
-   - Shows percentage of time spent on each macro activity per quarter
-   - Interactive pie charts
-   - Saved as `percentages_YYYY_QN.html`
-
-3. **Fiscal Year Distribution**:
-   - Shows percentage of time spent on each macro activity per fiscal year
-   - Interactive pie charts
-   - Saved as `percentages_FY_YYYY_YYYY.html`
-
-4. **Raw Data**:
-   - Excel file with all processed events
-   - Saved as `processed_events.xlsx`
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
+The tool generates several visualizations in the `
