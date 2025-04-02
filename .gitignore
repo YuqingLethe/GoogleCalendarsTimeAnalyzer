@@ -3,5 +3,10 @@ output/
 config/holidays.yaml
 config/text_replacements.yaml
 config/time_periods.yaml
+.idea/
 .venv/
+*.iml
 *.pyc
+
+
+
